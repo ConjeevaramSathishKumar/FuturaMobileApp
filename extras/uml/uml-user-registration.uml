@@ -1,0 +1,28 @@
+@startuml
+autonumber
+
+
+
+actor User as user
+participant "Browser UI" as browser
+participant "Customer Mobile App" as cusomer_app
+participant "External System(Insurance)" as external_sys
+
+user -> browser : Visit Registration Page add Mobile, Email & Policy No
+browser -> cusomer_app : Retrieve Policy Info basis Mobile, Email & Policy No1
+cusomer_app -> cusomer_app : Check if policy found in Customer App
+cusomer_app -> external_sys : Policy not found in Customer App\n get it from from external system.
+cusomer_app -> cusomer_app : Load policy details in customer App from external system
+browser <- cusomer_app : Return to login page with form field \nmobile and OTP
+user <- browser : Display login page, wait for user input
+user -> browser : Fill in the mobile and OTP fields, and hit the submit button
+browser -> cusomer_app : Send the mobile and OTP
+cusomer_app -> cusomer_app : Verify the information is valid
+alt Login valid
+    browser <- cusomer_app : Return the logged in page
+    user <- browser : Display the logged in page
+else Login invalid
+    browser <- cusomer_app : Return login failure page
+    user <- browser : Display the login failure page
+end
+@enduml

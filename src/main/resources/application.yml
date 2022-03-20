@@ -8,7 +8,7 @@ server:
 spring:
   datasource:
     password: root@12345
-    url: jdbc:postgresql://localhost:5432/futura-customer-db
+    url: jdbc:postgresql://localhost:5432/customer-db
     username: postgres
     
 
