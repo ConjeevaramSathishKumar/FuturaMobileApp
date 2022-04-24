@@ -1,0 +1,23 @@
+@startuml
+autonumber
+
+actor User as user
+participant "Customer Mobile App" as customer_app
+participant "External System(Insurance)" as external_sys
+
+user -> customer_app : Login with Email/Mobile & OTP
+customer_app -> user: Loaded landing home page
+user -> customer_app: Select policy alteration "Change Bank" and fill (IFSC, Bank Name, Branch, Max Amt & Termination Date) details
+customer_app -> customer_app: Process submitted Bank details 
+alt validation failure
+customer_app -> user: Show validation errors if any
+user -> customer_app: Correct validation error(s)
+customer_app -> external_sys: Post policy alteration request to external system\n with Status="Submitted"
+else validation success
+customer_app -> external_sys: Post policy alteration request to external system\n with Status="Submitted"
+end
+customer_app -> user: Acknowledge request submitted successfully
+external_sys -> external_sys: Process policy alteration request in T+2 Days
+external_sys -> customer_app: policy alteration request processed with Status = "Completed"
+customer_app -> user: Acknowledge request processed successfully
+@enduml
